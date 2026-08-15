@@ -1080,6 +1080,7 @@ private loadKaryawanData() {
     const bokepCommands = ['.bokepmenu', 'bokepmenu', '.vidbokepindonesia', 'vidbokepindonesia', '.vidbokepmalaysia', 'vidbokepmalaysia', '.vidbokepjepang', 'vidbokepjepang', '.vidbokepchina', 'vidbokepchina', '.vidbokepamerika', 'vidbokepamerika'];
     const aiCommands = ['.aimenu', 'aimenu', '.midjourney', 'midjourney', '.grok', 'grok', '.imgai', 'imgai', '.bingimg', 'bingimg', '.nanobananaai', 'nanobananaai', '.hapusbgfoto', 'hapusbgfoto'];
     const cdramaCommands = ['.cdramamenu', 'cdramamenu', '.dramaromantis', 'dramaromantis', '.dramakomedi', 'dramakomedi', '.dramamisteri', 'dramamisteri', '.dramakerajaan', 'dramakerajaan', '.dramakeluarga', 'dramakeluarga', '.dramaperang', 'dramaperang', '.dramaxianxia', 'dramaxianxia', '.dramakriminal', 'dramakriminal', '.dramafantasi', 'dramafantasi'];
+    const fakecallCommands = ['.fakecallmenu', 'fakecallmenu', '.fakecallandroid', 'fakecallandroid', '.fakecalliphone', 'fakecalliphone', '.fakevidcalliphone', 'fakevidcalliphone'];
     const gameCommands = ['.gamemenu', 'gamemenu', '.tebakgambar', 'tebakgambar', '.susunkata', 'susunkata', '.math', 'math', '.tebakkata', 'tebakkata', '.tebakbendera', 'tebakbendera', '.asahotak', 'asahotak', '.tebaklirik', 'tebaklirik', '.tekateki', 'tekateki', '.tebakangka', 'tebakangka', '.kuis', 'kuis', '.tebakkota', 'tebakkota', '.family100', 'family100', '.tebakusia', 'tebakusia', '.tebakkimia', 'tebakkimia', '.tebakbuah', 'tebakbuah', '.werewolf', 'werewolf', '.tebakuang', 'tebakuang', '.tebaksurah', 'tebaksurah', '.tebakhewan', 'tebakhewan', '.tebakbaju', 'tebakbaju', '.tebakcelana', 'tebakcelana', '.tebakmakanan', 'tebakmakanan', '.tebakjkt48', 'tebakjkt48', '.togel', 'togel', '.stoptogel', 'stoptogel', '.truthordare', 'truthordare', '.ulartangga', 'ulartangga'];
     const premiumCommands = ['.limit', 'limit', '.ai', 'ai']; // Placeholder for premium restricted commands
     
@@ -1175,6 +1176,7 @@ private loadKaryawanData() {
         ...bokepCommands,
         ...aiCommands,
         ...cdramaCommands,
+        ...fakecallCommands,
         ...gameCommands
     ];
     const isProtectedFeature = requireRegistrationCommands.includes(requestedCmd.toLowerCase()) || requireRegistrationCommands.includes("." + possibleCommandName);
@@ -1194,7 +1196,7 @@ private loadKaryawanData() {
 
     if (isMenuCmd) {
       const botName = this.customBotName || this.sock.user?.name || "Wabot Pro";
-      const totalFitur = ownerCommands.length + groupCommands.length + funCommands.length + margaCommands.length + videoCommands.length + stickerCommands.length + downloadCommands.length + kristenCommands.length + islamCommands.length + cecanCommands.length + primbonCommands.length + animeCommands.length + sertifikatCommands.length + rpgCommands.length + storeCommands.length + beritaCommands.length + sulapCommands.length + hentaiCommands.length + hantuCommands.length + posterCommands.length + coganCommands.length + toolsCommands.length + deviceCommands.length + tiketCommands.length + karyawanCommands.length + hewanCommands.length + bokepCommands.length + aiCommands.length + cdramaCommands.length + gameCommands.length;
+      const totalFitur = ownerCommands.length + groupCommands.length + funCommands.length + margaCommands.length + videoCommands.length + stickerCommands.length + downloadCommands.length + kristenCommands.length + islamCommands.length + cecanCommands.length + primbonCommands.length + animeCommands.length + sertifikatCommands.length + rpgCommands.length + storeCommands.length + beritaCommands.length + sulapCommands.length + hentaiCommands.length + hantuCommands.length + posterCommands.length + coganCommands.length + toolsCommands.length + deviceCommands.length + tiketCommands.length + karyawanCommands.length + hewanCommands.length + bokepCommands.length + aiCommands.length + cdramaCommands.length + gameCommands.length + fakecallCommands.length;
       
       const dateNow = new Date();
       const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Jakarta' };
@@ -1248,6 +1250,7 @@ ${readmore}
 │ .karyawanmenu
 │ .hewanmenu
 │ .cdramamenu
+│ .fakecallmenu
 
 Ketik menu yang kamu inginkan.`;
       
@@ -1269,7 +1272,11 @@ Ketik menu yang kamu inginkan.`;
         this.broadcastState(`Error sending allmenu: ${err.message}`);
         await this.sock.sendMessage(jid, { text: `⚠️ Terjadi kesalahan saat mengirim menu.` }, { quoted: msg });
       }
-    } else if (body === "storemenu" || body === ".storemenu" || body === "store menu" || body === ".store menu") {
+    
+    } else if (body === "fakecallmenu" || body === ".fakecallmenu" || body === "fakecall menu" || body === ".fakecall menu") {
+      const fakecallText = `📱 *Fake Call Menu*\n\n│ .fakecallandroid teks | durasi\n│ .fakecalliphone teks | durasi\n│ .fakevidcalliphone teks | durasi\n\nContoh:\n.fakecallandroid Sayang | 05:20\n\nCatatan: Reply gambar untuk dijadikan foto profil.`;
+      await this.sock.sendMessage(jid, { text: fakecallText, contextInfo: this.getMenuContextInfo() }, { quoted: this.getFakeMenuQuote(senderJid, msg.pushName || "User") });
+} else if (body === "storemenu" || body === ".storemenu" || body === "store menu" || body === ".store menu") {
       const storeText = `🛒 *Store Menu*\n\n│ .list\n│ .addlist\n│ .dellist\n│ .update\n│ .jeda\n│ .tambah\n│ .kurang\n│ .kali\n│ .delsetdone\n│ .changedone\n│ .setdone\n│ .delproses\n│ .changeproses\n│ .setproses\n│ .proses\n│ .done`;
       await this.sock.sendMessage(jid, { text: storeText, contextInfo: this.getMenuContextInfo() }, { quoted: this.getFakeMenuQuote(senderJid, msg.pushName || "User") });
       this.broadcastState(`Responded to storemenu command`);
@@ -1806,7 +1813,176 @@ Perintah ini hanya bisa digunakan oleh Owner!` }, { quoted: msg });
       }
       await this.sock.sendMessage(jid, { text: txt.trim() }, { quoted: msg });
 
-    } else if (body.startsWith(".cekproduk") || body.startsWith("cekproduk")) {
+    
+    } else if (body.startsWith(".fakecallandroid") || body.startsWith(".fakecalliphone") || body.startsWith(".fakevidcalliphone") || body.startsWith("fakecallandroid") || body.startsWith("fakecalliphone") || body.startsWith("fakevidcalliphone")) {
+        const isIphone = body.includes("iphone");
+        const isVideo = body.includes("vidcall");
+        const args = body.split(" ").slice(1).join(" ").split("|");
+        const name = (args[0] || "Unknown").trim();
+        const duration = (args[1] || "00:00").trim();
+        
+        let imageBuffer = null;
+        try {
+            const isQuotedImage = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage?.imageMessage;
+            if (isQuotedImage) {
+                const stream = await downloadContentFromMessage(msg.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage, 'image');
+                let buffer = Buffer.from([]);
+                for await(const chunk of stream) {
+                    buffer = Buffer.concat([buffer, chunk]);
+                }
+                imageBuffer = buffer;
+            } else if (msg.message?.imageMessage) {
+                const stream = await downloadContentFromMessage(msg.message.imageMessage, 'image');
+                let buffer = Buffer.from([]);
+                for await(const chunk of stream) {
+                    buffer = Buffer.concat([buffer, chunk]);
+                }
+                imageBuffer = buffer;
+            }
+        } catch (e) {
+            console.error("Error downloading image:", e);
+        }
+
+        if (!imageBuffer) {
+            imageBuffer = await sharp({
+                create: { width: 400, height: 400, channels: 4, background: { r: 150, g: 150, b: 150, alpha: 1 } }
+            }).png().toBuffer();
+        }
+
+        try {
+            await this.sock.sendMessage(jid, { text: "⏳ Sedang membuat..." }, { quoted: msg });
+            
+            const width = 720;
+            const height = 1280;
+            let compositeOptions = [];
+            
+            const iconOptions = `<circle cx="120" cy="1140" r="45" fill="#2a3942" />
+                <!-- dots -->
+                <circle cx="105" cy="1140" r="5" fill="#fff" />
+                <circle cx="120" cy="1140" r="5" fill="#fff" />
+                <circle cx="135" cy="1140" r="5" fill="#fff" />`;
+                
+            const iconVideo = `<circle cx="280" cy="1140" r="45" fill="#2a3942" />
+                <!-- video -->
+                <path d="M 265 1130 L 285 1130 A 5 5 0 0 1 290 1135 L 290 1145 A 5 5 0 0 1 285 1150 L 265 1150 A 5 5 0 0 1 260 1145 L 260 1135 A 5 5 0 0 1 265 1130 Z M 290 1135 L 300 1130 L 300 1150 L 290 1145" fill="#fff" />`;
+                
+            const iconSpeaker = `<circle cx="440" cy="1140" r="45" fill="#ffffff" />
+                <!-- speaker -->
+                <path d="M 430 1130 L 440 1120 L 440 1160 L 430 1150 L 420 1150 L 420 1130 Z" fill="#000" />
+                <path d="M 445 1125 A 20 20 0 0 1 445 1155" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round" />
+                <path d="M 450 1120 A 25 25 0 0 1 450 1160" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round" />`;
+                
+            const iconEndCall = `<circle cx="600" cy="1140" r="45" fill="#ea0038" />
+                <!-- end call -->
+                <path d="M 580 1145 A 25 25 0 0 1 620 1145" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" />
+                <path d="M 578 1145 L 575 1155 L 585 1155 Z" fill="#fff" />
+                <path d="M 622 1145 L 625 1155 L 615 1155 Z" fill="#fff" />`;
+
+            if (isVideo) {
+                const bg = await sharp(imageBuffer)
+                    .resize(width, height, { fit: 'cover' })
+                    .modulate({ brightness: 0.5 })
+                    .blur(10)
+                    .png().toBuffer();
+                
+                const pip = await sharp(imageBuffer)
+                    .resize(180, 260, { fit: 'cover' })
+                    .png().toBuffer();
+                
+                const svg = `
+                <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="200" fill="url(#gradTop)" />
+                    <defs>
+                        <linearGradient id="gradTop" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#000" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+                        </linearGradient>
+                        <linearGradient id="gradBot" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+                            <stop offset="100%" stop-color="#000" stop-opacity="0.9"/>
+                        </linearGradient>
+                        <clipPath id="pipClip">
+                            <rect x="500" y="850" width="180" height="260" rx="20" />
+                        </clipPath>
+                    </defs>
+                    <rect y="1000" width="100%" height="280" fill="url(#gradBot)" />
+                    
+                    <text x="360" y="80" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" text-anchor="middle">${name}</text>
+                    <text x="360" y="130" font-family="Arial, sans-serif" font-size="28" fill="#dddddd" text-anchor="middle">${duration}</text>
+                    
+                    <text x="360" y="650" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle">You</text>
+                    
+                    ${iconOptions}
+                    ${iconVideo}
+                    ${iconSpeaker}
+                    ${iconEndCall}
+                </svg>`;
+                
+                compositeOptions.push({ input: bg, top: 0, left: 0 });
+                // We add pip first
+                // Need to mask the pip image with rounded corners
+                const roundedPip = await sharp(pip).composite([{
+                    input: Buffer.from(`<svg width="180" height="260"><rect width="180" height="260" rx="20" /></svg>`),
+                    blend: 'dest-in'
+                }]).png().toBuffer();
+
+                compositeOptions.push({ input: roundedPip, top: 850, left: 500 });
+                compositeOptions.push({ input: Buffer.from(svg), top: 0, left: 0 });
+                
+                const finalImg = await sharp({
+                    create: { width, height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } }
+                })
+                .composite(compositeOptions)
+                .png().toBuffer();
+                
+                await this.sock.sendMessage(jid, { image: finalImg, caption: `Fake VidCall ${name}` }, { quoted: msg });
+                
+            } else {
+                const isAndro = !isIphone;
+                
+                const circleAvatar = await sharp(imageBuffer)
+                    .resize(320, 320, { fit: 'cover' })
+                    .composite([{
+                        input: Buffer.from(`<svg><circle cx="160" cy="160" r="160" /></svg>`),
+                        blend: 'dest-in'
+                    }])
+                    .png().toBuffer();
+                    
+                const bottomBg = isAndro ? `<rect x="40" y="1080" width="640" height="120" rx="60" fill="#1f2c34" />` : ``;
+                
+                const svg = `
+                <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="#0b141a" />
+                    
+                    <text x="360" y="110" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" text-anchor="middle">${name}</text>
+                    <text x="360" y="160" font-family="Arial, sans-serif" font-size="28" fill="#8696a0" text-anchor="middle">${duration}</text>
+                    
+                    ${bottomBg}
+                    
+                    ${iconOptions}
+                    ${iconVideo}
+                    ${iconSpeaker}
+                    ${iconEndCall}
+                </svg>`;
+                
+                // If iphone, the text might be slightly different but this is very close
+                
+                compositeOptions.push({ input: Buffer.from(svg), top: 0, left: 0 });
+                compositeOptions.push({ input: circleAvatar, top: 380, left: 200 });
+                
+                const finalImg = await sharp({
+                    create: { width, height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } }
+                })
+                .composite(compositeOptions)
+                .png().toBuffer();
+                
+                await this.sock.sendMessage(jid, { image: finalImg, caption: `Fake Call ${name}` }, { quoted: msg });
+            }
+        } catch (e) {
+            console.error("Error drawing fake call:", e);
+            await this.sock.sendMessage(jid, { text: "⚠️ Gagal membuat gambar fake call." }, { quoted: msg });
+        }
+} else if (body.startsWith(".cekproduk") || body.startsWith("cekproduk")) {
       const id = messageContent.replace(/^\.?cekproduk\s*/i, "").trim().toLowerCase();
       if (!this.karyawanData.produk[id]) return await this.sock.sendMessage(jid, { text: `❌ Produk dengan ID ${id} tidak ditemukan.` }, { quoted: msg });
       
@@ -2689,7 +2865,7 @@ Contoh: .delowner 628xxx` }, { quoted: msg });
       this.broadcastState(`Deleted custom bot name`);
       await this.sock.sendMessage(jid, { text: `✅ Berhasil mereset nama bot ke default.` }, { quoted: msg });
     } else if (body === ".totalfitur" || body === "totalfitur") {
-      const totalFitur = ownerCommands.length + groupCommands.length + funCommands.length + margaCommands.length + videoCommands.length + stickerCommands.length + downloadCommands.length + kristenCommands.length + islamCommands.length + cecanCommands.length + primbonCommands.length + animeCommands.length + sertifikatCommands.length + rpgCommands.length + storeCommands.length + beritaCommands.length + sulapCommands.length + hentaiCommands.length + hantuCommands.length + posterCommands.length + coganCommands.length + toolsCommands.length + deviceCommands.length + tiketCommands.length + karyawanCommands.length + hewanCommands.length + bokepCommands.length + aiCommands.length + cdramaCommands.length + gameCommands.length;
+      const totalFitur = ownerCommands.length + groupCommands.length + funCommands.length + margaCommands.length + videoCommands.length + stickerCommands.length + downloadCommands.length + kristenCommands.length + islamCommands.length + cecanCommands.length + primbonCommands.length + animeCommands.length + sertifikatCommands.length + rpgCommands.length + storeCommands.length + beritaCommands.length + sulapCommands.length + hentaiCommands.length + hantuCommands.length + posterCommands.length + coganCommands.length + toolsCommands.length + deviceCommands.length + tiketCommands.length + karyawanCommands.length + hewanCommands.length + bokepCommands.length + aiCommands.length + cdramaCommands.length + gameCommands.length + fakecallCommands.length;
       await this.sock.sendMessage(jid, { text: `⚠️ *Total Fitur Bot* : ${totalFitur} Fitur` }, { quoted: msg });
     } else if (body.startsWith(".addprefix") || body.startsWith("addprefix")) {
       const text = messageContent.replace(/^\.?addprefix\s*/i, "").trim();
